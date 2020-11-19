@@ -1,49 +1,59 @@
-const router = require("express").Router();
-const Transaction = require("../models/transaction.js");
-
-router.post("/api/transaction", ({ body }, res) => {
-  Transaction.create(body)
-    .then(dbTransaction => {
-      res.json(dbTransaction);
-    })
-    .catch(err => {
-      res.status(400).json(err);
-    });
-});
-
-router.post("/api/transaction/bulk", ({ body }, res) => {
-  Transaction.insertMany(body)
-    .then(dbTransaction => {
-      res.json(dbTransaction);
-    })
-    .catch(err => {
-      res.status(400).json(err);
-    });
-});
-
-router.get("/api/transaction", (req, res) => {
-  Transaction.find({})
-    .sort({ date: -1 })
-    .then(dbTransaction => {
-      res.json(dbTransaction);
-    })
-    .catch(err => {
-      res.status(400).json(err);
-    });
-});
-    router.get('/api/workouts/transaction', (req, res) => {
-        db.Transaction.find({})
-          .sort({ _id: -1 })
-          .limit(5)
-          .then(dbTransaction => {
-            console.log(dbTransaction);
-            res.json(dbTransaction);
-            console.log(dbTransaction);
-          })
-          .catch(err => {
-            res.json(err);
+    const router = require("express").Router();
+    const db = require("../models/");
+   
+    router.post("/api/workout", ({ body }, res) => {
+   db.Workout.create(body)
+        .then(dbWorkout => {
+        res.json(dbWorkout);
+        })
+        .catch(err => {
+        res.status(400).json(err);
         });
+    });
 
-});
+    router.post("/api/workout/bulk", ({ body }, res) => {
+   db.Workout.insertMany(body)
+        .then(dbWorkout => {
+        res.json(dbWorkout);
+        })
+        .catch(err => {
+        res.status(400).json(err);
+        });
+    });
 
-module.exports = router;
+    router.get("/api/workout", (req, res) => {
+    db.Workout.find({})
+        .sort({ date: -1 })
+        .then(dbWorkout => {
+        res.json(dbWorkout);
+        })
+        .catch(err => {
+        res.status(400).json(err);
+        });
+    });
+        router.get('/api/workouts/workout', (req, res) => {
+            db.Workout.find({})
+            .sort({ _id: -1 })
+            .limit(5)
+            .then(dbWorkout => {
+                console.log(dbWorkout);
+                res.json(dbWorkout);
+                console.log(dbWorkout);
+            })
+            .catch(err => {
+                res.json(err);
+            });
+            // Adding the new workout
+    router.post("/api/workouts", ({ body }, res) => {
+        db.Workout.create(body)
+        .then(dbWorkout => {
+            res.json(dbWorkout);
+        })
+        .catch(err => {
+            res.status(400).json(err);
+        });
+    });
+
+    });
+
+    module.exports = router;
